@@ -15,7 +15,7 @@ const Pokemon = (props) => {
             <div className="poke-img-container">
                 <img
                     alt={pokemon.name}
-                    src={pokemon.sprites.front_default}
+                    src={pokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default']}
                     className="pokemon-img" />
             </div>
             <div className="card-body">
