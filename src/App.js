@@ -20,10 +20,12 @@ function App() {
   const fetchPokemons = async () => {
     try {
       setLoading(true)
+      setNotFound(false)
       const data = await getPokemon(itensPerPage, itensPerPage * page);
       const promises = data.results.map(async (pokemon) => {
         return await getPokemonData(pokemon.url)
       });
+
       const result = await Promise.all(promises)
       setPokemons(result)
       setLoading(false)
@@ -33,10 +35,10 @@ function App() {
     }
   }
 
-const loadFavoritePokemons = () =>{
-  const pokemons = JSON.parse(window.localStorage.getItem(favoriteskeys))
-  SetFavorites(pokemons)
-}
+  const loadFavoritePokemons = () => {
+    const pokemons = JSON.parse(window.localStorage.getItem(favoriteskeys)) || []
+    SetFavorites(pokemons)
+  }
 
   useEffect(() => {
     loadFavoritePokemons();
@@ -44,14 +46,15 @@ const loadFavoritePokemons = () =>{
 
   useEffect(() => {
     fetchPokemons();
+    console.log(favorites.length)
   }, [page])
 
   const updateFavoritePokemons = (name) => {
     const updateFavorite = [...favorites]
     const favoriteIndex = favorites.indexOf(name)
-    if(favoriteIndex >= 0){
-      updateFavorite.slice(favoriteIndex, 1);
-    }else {
+    if (favoriteIndex >= 0) {
+      updateFavorite.splice(favoriteIndex, 1);
+    } else {
       updateFavorite.push(name);
     }
     window.localStorage.setItem(favoriteskeys, JSON.stringify(updateFavorite))
@@ -59,13 +62,13 @@ const loadFavoritePokemons = () =>{
   }
 
   const HandleOnSearch = async (pokemon) => {
-    if(!pokemon) {
+    if (!pokemon) {
       return fetchPokemons();
     }
     setLoading(true)
     setNotFound(false)
     const result = await searchPokemon(pokemon)
-    if(!result){
+    if (!result) {
       setNotFound(true)
     } else {
       setPokemons([result])
@@ -76,24 +79,26 @@ const loadFavoritePokemons = () =>{
   }
 
   return (
-    <FavoriteProvider 
-    value={{
-      favoritePokemons: favorites, 
-      updateFavoritePokemons:updateFavoritePokemons}}>
-    <div>
-      <NavBar />
-      <SearchBar HandleOnSearch={HandleOnSearch}/>
-      {notFound ? (
-        <div className='not-found'>Nenhum pokemon encontrado!!!</div>
-      ) : (
-      <Pokedex 
-        pokemons={pokemons} 
-        loading={loading}
-        page={page}
-        setPage={setPage}
-        totalPages={totalPages}
-      />)}
-    </div>
+    <FavoriteProvider
+      value={{
+        favoritePokemons: favorites,
+        updateFavoritePokemons: updateFavoritePokemons
+      }}>
+      <div>
+        <NavBar
+          favorites={favorites} />
+        <SearchBar HandleOnSearch={HandleOnSearch} />
+        {notFound ? (
+          <div className='not-found'>Nenhum pokemon encontrado!!!</div>
+        ) : (
+          <Pokedex
+            pokemons={pokemons}
+            loading={loading}
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+          />)}
+      </div>
     </FavoriteProvider>
   );
 }
