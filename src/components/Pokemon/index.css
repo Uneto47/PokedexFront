@@ -9,6 +9,10 @@
     margin-right: 10px;
 }
 
+.pokemon-img:hover{
+    cursor: pointer;
+}
+
 .poke-img-container{
     padding: 0px 5px;
 }
