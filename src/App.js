@@ -4,7 +4,7 @@ import NavBar from './components/NavBar';
 import Pokedex from './components/Pokedex';
 import SearchBar from './components/SearchBar';
 import { FavoriteProvider } from './contexts/FavContext/FavContext';
-import { getPokemon, getPokemonData, searchPokemon } from './services/api';
+import { getPokemon, getPokemonData } from './services/api';
 
 const favoriteskeys = "favorites"
 
