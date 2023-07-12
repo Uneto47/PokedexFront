@@ -14,14 +14,28 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [pokemons, setPokemons] = useState([]);
+  const [totalPokemons, setTotalPokemons] = useState([]);
   const [favorites, SetFavorites] = useState([]);
 
   const itensPerPage = 27
+  const itensTotal = 151
+
+
+  const ChargeTotal = async () => {
+    const totalData = await getPokemon(itensTotal, 0)
+    const totalPromises = totalData.results.map(async (pokemon) => {
+      return await getPokemonData(pokemon.url)
+    });
+
+    const totalResult = await Promise.all(totalPromises)
+    setTotalPokemons(totalResult)
+  }
+
   const fetchPokemons = async () => {
     try {
       setLoading(true)
       setNotFound(false)
-      const data = await getPokemon(itensPerPage, itensPerPage * page);
+      const data = await getPokemon(itensPerPage, itensPerPage * page)
       const promises = data.results.map(async (pokemon) => {
         return await getPokemonData(pokemon.url)
       });
@@ -36,17 +50,17 @@ function App() {
   }
 
   const loadFavoritePokemons = () => {
-    const pokemons = JSON.parse(window.localStorage.getItem(favoriteskeys)) || []
-    SetFavorites(pokemons)
+    const pokemon = JSON.parse(window.localStorage.getItem(favoriteskeys)) || []
+    SetFavorites(pokemon)
   }
 
   useEffect(() => {
-    loadFavoritePokemons();
+    loadFavoritePokemons()
   }, [page])
 
   useEffect(() => {
-    fetchPokemons();
-    console.log(favorites.length)
+    fetchPokemons()
+    ChargeTotal()
   }, [page])
 
   const updateFavoritePokemons = (name) => {
@@ -67,15 +81,26 @@ function App() {
     }
     setLoading(true)
     setNotFound(false)
-    const result = await searchPokemon(pokemon)
-    if (!result) {
+    pokemonFilter(pokemon)
+    console.log(pokemons)
+    if (pokemons.length === 0) {
       setNotFound(true)
-    } else {
-      setPokemons([result])
+    }
+    else {
       setPage(0)
       setTotalPages(1)
     }
     setLoading(false)
+  }
+
+  const pokemonFilter = (name) => {
+    var filtredpokemons = [];
+    for (var i in totalPokemons) {
+      if (totalPokemons[i].name.includes(name)) {
+        filtredpokemons.push(totalPokemons[i])
+      }
+    }
+    setPokemons(filtredpokemons);
   }
 
   return (
