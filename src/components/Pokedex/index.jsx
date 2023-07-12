@@ -15,7 +15,6 @@ const Pokedex = (props) => {
             setPage(page+1)
         }
     }
-    console.log(pokemons)
     return (
         <div>
             <div className="pokedex-header">
