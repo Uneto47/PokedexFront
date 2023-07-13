@@ -1,12 +1,20 @@
 import React, { useContext } from "react"
 import FavContext from "../../contexts/FavContext/FavContext"
 import "./index.css"
+import { useNavigate } from "react-router-dom"
 
 const Pokemon = (props) => {
     const { favoritePokemons, updateFavoritePokemons } = useContext(FavContext)
-    const { pokemon } = props
+    const { pokemon , setPokemonData } = props
     const HandleHeartOnClick = () => {
         updateFavoritePokemons(pokemon.name) }
+
+    const navigate = useNavigate();
+    
+    const handlePokemonPick = () => {
+        setPokemonData(pokemon)
+        navigate("/profile")
+    }
         
     const heart = favoritePokemons.includes(pokemon.name) ? "❤️" : "🤍"
 
@@ -14,6 +22,7 @@ const Pokemon = (props) => {
         <div className="Card-pokemon">
             <div className="poke-img-container">
                 <img
+                    onClick={handlePokemonPick}
                     alt={pokemon.name}
                     src={pokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default']}
                     className="pokemon-img" />
