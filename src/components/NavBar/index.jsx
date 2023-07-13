@@ -1,21 +1,20 @@
 import './index.css'
-import React, {useContext} from "react";
-import FavContext from '../../contexts/FavContext/FavContext';
+import SearchBar from '../SearchBar';
 
-const NavBar = () => {
-    const { favoritePokemons } = useContext(FavContext);
+const NavBar = (props) => {
+    const { HandleOnSearch } = props
     const imgLogo =
         "https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"
     return (
-        <nav>
-            <div>
+        <div className="Navbar">
+            <nav>
                 <img
                     alt="logo-pokemon"
                     src={imgLogo}
                     className="navbar-img" />
-            </div>
-            <div>{favoritePokemons.length} ❤️ FAVORITE </div>
-        </nav>
+                <SearchBar HandleOnSearch={HandleOnSearch} />
+            </nav>
+        </div>
     )
 }
 
