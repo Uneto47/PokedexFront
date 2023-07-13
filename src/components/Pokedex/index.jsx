@@ -1,10 +1,14 @@
 import './index.css'
-import React from "react";
+import React, { useContext } from "react";
 import Pokemon from '../Pokemon';
 import Pagination from '../pagination';
+import FavContext from '../../contexts/FavContext/FavContext';
+
 
 const Pokedex = (props) => {
     const { pokemons, loading, setPage, page, totalPages} = props
+    const { favoritePokemons } = useContext(FavContext);
+
     const HandleOnLeftClick = () =>{
         if(page>0){
             setPage(page-1)
@@ -18,7 +22,9 @@ const Pokedex = (props) => {
     return (
         <div>
             <div className="pokedex-header">
-                <h1>Pokedex</h1>
+                <div>
+                    {favoritePokemons.length} ❤️ FAVORITE
+                </div>
                 <Pagination
                 page={page+1}
                 totalPages={totalPages}
