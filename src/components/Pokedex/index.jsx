@@ -6,7 +6,7 @@ import FavContext from '../../contexts/FavContext/FavContext';
 
 
 const Pokedex = (props) => {
-    const { pokemons, loading, setPage, page, totalPages} = props
+    const { pokemons, loading, setPage, page, totalPages, setPokemonData} = props
     const { favoritePokemons } = useContext(FavContext);
 
     const HandleOnLeftClick = () =>{
@@ -38,7 +38,7 @@ const Pokedex = (props) => {
             <div className='pokedex-grid'>
                     {pokemons && pokemons.map((pokemon, index) => {
                         return (
-                            <Pokemon key={index} pokemon={pokemon}/>
+                            <Pokemon setPokemonData={setPokemonData} key={index} pokemon={pokemon}/>
                         )
                     })}
             </div>)
