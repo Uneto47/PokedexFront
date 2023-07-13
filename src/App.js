@@ -111,8 +111,9 @@ function App() {
       }}>
       <div>
         <NavBar
-          favorites={favorites} />
-        <SearchBar HandleOnSearch={HandleOnSearch} />
+          favorites={favorites}
+          HandleOnSearch={HandleOnSearch} 
+          />
         {notFound ? (
           <div className='not-found'>Nenhum pokemon encontrado!!!</div>
         ) : (
