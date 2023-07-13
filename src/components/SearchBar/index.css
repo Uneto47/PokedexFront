@@ -1,28 +1,22 @@
 .searchbar-container{
     display: flex;
-    margin: 0px auto;
+    justify-content: center;
     padding: 0 20px;
     align-items: center;
 }
 
 .searchbar{
-    background-color: white;
     margin-right: -18px;
 }
 
 .searchbar input{
     padding: 10px;
     margin-right: 20px;
+    width: 200px;
+    height: 10px;
+    background-color: rgba(70, 68, 68, 0.219);
     box-shadow: 0px 2px 2px (0,0,0,0.25);
     border-radius: 3px;
     border: none;
 }
 
-.search-button button{
-    background-color: #0e6f9f;
-    border: none;
-    border-radius: 10px;
-    height: 44px;
-    color: white;
-    padding: 10px 12px;
-}

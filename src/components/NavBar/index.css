@@ -1,12 +1,16 @@
+.Navbar{
+  background-color: black;
+}
 nav {
     height: 100px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-inline: 10px ;
+    margin-inline: 25px;
+    padding: 20px;
   }
 
 .navbar-img{
-    width: 160px;
+    width: 250px;
 }
